@@ -18,13 +18,105 @@ show_contact: true
 
 <nav class="index">
   {% for w in collections.writing %}
-  <a class="row" href="{{ w.data.external_url or w.data.file or w.url }}"{% if w.data.external_url or w.data.file %} target="_blank" rel="noopener"{% endif %}>
+  {% set isPdf = w.data.file and not w.data.external_url %}
+  {% set href = w.data.external_url or w.data.file or w.url %}
+  <a class="row" href="{{ href }}"
+     {% if isPdf %}data-pdf="{{ w.data.file }}" data-code="{{ w.data.code }}" data-title="{{ w.data.title }}" data-year="{{ w.data.year }}" data-language="{{ w.data.language }}"{% endif %}
+     {% if w.data.external_url or w.data.file %} target="_blank" rel="noopener"{% endif %}>
     <div class="yr">{{ w.data.year or "—" }}</div>
     <div class="code">{{ w.data.code or "—" }}</div>
     <div class="ttl">{{ w.data.title }}</div>
     <div class="typ">{{ w.data.publication or "—" }}</div>
     <div class="loc">{{ w.data.language or "→" }}</div>
-    <div class="arr">{% if w.data.external_url or w.data.file %}↗{% else %}→{% endif %}</div>
+    <div class="arr">{% if isPdf %}▸{% elif w.data.external_url %}↗{% else %}→{% endif %}</div>
   </a>
   {% endfor %}
 </nav>
+
+<!-- inline pdf reader -->
+<div class="pdf-reader" id="pdf-reader" aria-hidden="true" role="dialog" aria-label="Document viewer">
+  <div class="backdrop" data-close></div>
+  <div class="shell">
+    <div class="chrome">
+      <div class="code" data-field="code">—</div>
+      <div class="ttl"><span data-field="title">Untitled</span><span class="meta" data-field="meta"></span></div>
+      <div class="ctrls">
+        <a data-field="external" href="#" target="_blank" rel="noopener" title="Open in new tab">↗ Open</a>
+        <a data-field="download" href="#" download title="Download">↓ Save</a>
+        <button type="button" data-close title="Close (Esc)">✕ Close</button>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="loading" data-field="loading">Loading</div>
+      <iframe data-field="frame" title="PDF document"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const reader = document.getElementById('pdf-reader');
+  if (!reader) return;
+  const frame   = reader.querySelector('[data-field="frame"]');
+  const loading = reader.querySelector('[data-field="loading"]');
+  const fCode   = reader.querySelector('[data-field="code"]');
+  const fTitle  = reader.querySelector('[data-field="title"]');
+  const fMeta   = reader.querySelector('[data-field="meta"]');
+  const fExt    = reader.querySelector('[data-field="external"]');
+  const fDl     = reader.querySelector('[data-field="download"]');
+  let lastFocus = null;
+
+  function open(opts){
+    lastFocus = document.activeElement;
+    fCode.textContent  = opts.code  || '—';
+    fTitle.textContent = opts.title || 'Document';
+    const metaBits = [opts.year, opts.language].filter(Boolean).join(' · ');
+    fMeta.textContent  = metaBits ? '— ' + metaBits : '';
+    fExt.href = opts.url;
+    fDl.href  = opts.url;
+    frame.classList.remove('ready');
+    loading.style.display = '';
+    // load with #view=FitH so it fits width nicely
+    frame.src = opts.url + '#view=FitH&toolbar=1';
+    reader.setAttribute('data-open', 'true');
+    reader.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pdf-open');
+  }
+
+  function close(){
+    reader.removeAttribute('data-open');
+    reader.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pdf-open');
+    // delay clearing src until after the fade so it doesn't flash
+    setTimeout(() => { frame.src = 'about:blank'; frame.classList.remove('ready'); }, 360);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  frame.addEventListener('load', () => {
+    if (frame.src && frame.src !== 'about:blank' && !frame.src.endsWith('blank')) {
+      frame.classList.add('ready');
+      loading.style.display = 'none';
+    }
+  });
+
+  document.querySelectorAll('a.row[data-pdf]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      // honor modifier keys for power users
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      open({
+        url:      a.getAttribute('data-pdf'),
+        code:     a.getAttribute('data-code'),
+        title:    a.getAttribute('data-title'),
+        year:     a.getAttribute('data-year'),
+        language: a.getAttribute('data-language')
+      });
+    });
+  });
+
+  reader.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && reader.getAttribute('data-open') === 'true') close();
+  });
+})();
+</script>
