@@ -5,14 +5,13 @@
 # Edits commit straight to your GitHub repo. You'll need to:
 #   1. Replace `repo:` with your actual `owner/repo` slug
 #   2. Set up an OAuth provider (easiest: https://decapbridge.com — free, zero-config)
-#      OR self-host one (see README.md)
+#      OR self-hostone (see README.md)
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME   # ← change this
+  repo: anvold95/andreasvold
   branch: main
-  # If using decapbridge.com, uncomment the next two lines:
-  # base_url: https://decapbridge.com
-  # auth_endpoint: oauth/authorize/
+  base_url: https://decapbridge.com
+  auth_endpoint: oauth/authorize/
 
 # ─── where uploaded images go ──────────────────────────────────────────────
 media_folder: "src/assets/imagery/uploads"
