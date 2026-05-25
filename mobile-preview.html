@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>andreasvold.no — mobile preview</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #1a1a1a; min-height: 100vh; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px;
+    font-family: -apple-system, system-ui, sans-serif;
+  }
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* iPhone bezel */
+  .phone {
+    width: 402px;
+    height: 874px;
+    border-radius: 48px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 8px #111, 0 0 0 9px #2a2a2a;
+  }
+  .phone iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+    display: block;
+  }
+  /* dynamic island */
+  .island {
+    position: absolute;
+    top: 11px; left: 50%;
+    transform: translateX(-50%);
+    width: 126px; height: 37px;
+    border-radius: 24px;
+    background: #000;
+    z-index: 50;
+    pointer-events: none;
+  }
+  /* status bar overlay */
+  .statusbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 54px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px 0;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    pointer-events: none;
+  }
+  .statusbar svg { display: block; }
+  /* home indicator */
+  .home-indicator {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 139px; height: 5px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.7);
+    z-index: 60;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="label">andreasvold.no · iPhone</div>
+  <div class="phone">
+    <iframe src="index.html" title="andreasvold.no"></iframe>
+    <div class="island"></div>
+    <div class="statusbar">
+      <span>9:41</span>
+      <span style="display:inline-flex; gap:6px; align-items:center;">
+        <svg width="19" height="12" viewBox="0 0 19 12">
+          <rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#fff"/>
+          <rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#fff"/>
+          <rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#fff"/>
+          <rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#fff"/>
+        </svg>
+        <svg width="27" height="13" viewBox="0 0 27 13">
+          <rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="rgba(255,255,255,0.35)" fill="none"/>
+          <rect x="2" y="2" width="20" height="9" rx="2" fill="#fff"/>
+        </svg>
+      </span>
+    </div>
+    <div class="home-indicator"></div>
+  </div>
+</div>
+
+</body>
+</html>
