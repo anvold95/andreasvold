@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+permalink: /work/
+title: Work
+active: work
+---
+
+<section style="padding: 80px 0 24px;">
+  <h1 style="font-size: 32px; font-weight: 400; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px;">Index of work</h1>
+  <p style="font-size: 14px; color: var(--mute); max-width: 580px;">Listed by year, most recent first.</p>
+</section>
+
+<div class="section">
+  <span>Projects</span>
+  <span class="count">{{ collections.projects.length }} project{% if collections.projects.length != 1 %}s{% endif %}</span>
+</div>
+
+<nav class="index">
+  {% for p in collections.projects %}
+  <a class="row" href="{{ p.url }}">
+    <div class="yr">{{ p.data.year or "—" }}</div>
+    <div class="code">{{ p.data.code or "—" }}</div>
+    <div class="ttl">{{ p.data.title }}</div>
+    <div class="typ">{{ p.data.type or "—" }}</div>
+    <div class="loc">{{ p.data.location or "—" }}</div>
+    <div class="arr">→</div>
+  </a>
+  {% endfor %}
+</nav>

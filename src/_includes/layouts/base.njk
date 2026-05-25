@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="{{ lang or 'en' }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if title %}{{ title }} — {% endif %}{{ site.title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
+{% if extra_head %}{{ extra_head | safe }}{% endif %}
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="name"><a href="/">{{ site.title }}</a></div>
+    {% if nav != false %}
+    <nav>
+      <a href="/work/" {% if active == "work" %}class="active"{% endif %}>Work</a>
+      <a href="/writing/" {% if active == "writing" %}class="active"{% endif %}>Writing</a>
+      <a href="/about/" {% if active == "about" %}class="active"{% endif %}>About</a>
+    </nav>
+    {% else %}
+    <div>{{ site.tagline }}</div>
+    {% endif %}
+    <div>{{ site.location }} — {{ site.year }}</div>
+  </header>
+
+  {{ content | safe }}
+
+  <footer class="foot">
+    {% if show_contact %}
+    <div class="row">
+      <span>Contact</span>
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
+    {% endif %}
+    <div class="colophon">
+      <span>© {{ site.title }}, {{ site.year }}</span>
+      <span>{% if active != "home" %}<a href="/" style="color: inherit;">Home</a>{% else %}<a href="mailto:{{ site.email }}" style="color: inherit;">{{ site.email }}</a>{% endif %}</span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="/cursor.js"></script>
+{% if extra_scripts %}{{ extra_scripts | safe }}{% endif %}
+</body>
+</html>

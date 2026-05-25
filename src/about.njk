@@ -1,0 +1,91 @@
+---
+layout: layouts/base.njk
+permalink: /about/
+title: About
+active: about
+show_contact: true
+extra_head: |
+  <style>
+    .cv-section { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding: 32px 0; border-top: 1px solid var(--line); }
+    .cv-section .lbl { font-size: 13px; color: var(--mute); }
+    .cv-section .body { max-width: 640px; }
+    .cv-row { display: grid; grid-template-columns: 90px 1fr; gap: 24px; padding: 10px 0; }
+    .cv-row .yr { font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; }
+    .cv-row .what { font-size: 15px; color: var(--ink); }
+    .cv-row .what .place { color: var(--mute); }
+    @media (max-width: 860px) {
+      .cv-section { grid-template-columns: 1fr; gap: 12px; }
+      .cv-row { grid-template-columns: 60px 1fr; gap: 16px; }
+      .intro-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      .intro-grid > div:first-child { max-width: 200px; }
+    }
+  </style>
+---
+
+<section class="intro-grid" style="padding: 80px 0 48px; display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: start;">
+  <div>
+    <img src="/assets/imagery/portrait-andreas-bw.png" alt="Andreas Vold" style="width: 100%; height: auto; display: block; background: #0d0d0d;">
+    <div style="font-size: 11px; color: var(--faint); margin-top: 8px; letter-spacing: 0.04em;">Andreas Vold, 2026</div>
+  </div>
+  <div>
+    <p style="font-size: 17px; line-height: 1.6; color: var(--ink-soft); max-width: 520px;">Architect (MAA, MNAL) specialising in transformation and conservation of existing building stock. Working across sketching, visualisation, Revit modelling, and authority applications — with experience leading projects across all phases. Motivated by bridging architecture, cultural heritage, and technology: developing tools, methods, and strategies that document and demonstrate the value of transformation over demolition.</p>
+  </div>
+</section>
+
+<div class="cv-section">
+  <div class="lbl">Employment</div>
+  <div class="body">
+    <div class="cv-row"><div class="yr">2023 →</div><div class="what">MM Arkitekter ApS <span class="place">— Copenhagen</span></div></div>
+    <div class="cv-row"><div class="yr">2023</div><div class="what">LJB Arkitektur &amp; Landskap <span class="place">— Bergen</span></div></div>
+    <div class="cv-row"><div class="yr">2022 →</div><div class="what">A. Vold Arkitektur AS <span class="place">— own practice</span></div></div>
+    <div class="cv-row"><div class="yr">2022</div><div class="what">Teaching assistant <span class="place">— KADK, Copenhagen</span></div></div>
+    <div class="cv-row"><div class="yr">2020</div><div class="what">Louis Paillard Architecte <span class="place">— Paris</span></div></div>
+  </div>
+</div>
+
+<div class="cv-section">
+  <div class="lbl">Education</div>
+  <div class="body">
+    <div class="cv-row"><div class="yr">2021—23</div><div class="what">MA (cand.arch) <span class="place">— Cultural Heritage, Transformation and Restoration, Det Kongelige Akademi</span></div></div>
+    <div class="cv-row"><div class="yr">2016—20</div><div class="what">BA <span class="place">— Institut for Bygningskunst og Kultur, Det Kongelige Akademi</span></div></div>
+  </div>
+</div>
+
+<div class="cv-section">
+  <div class="lbl">Courses &amp; seminars</div>
+  <div class="body">
+    <div class="cv-row"><div class="yr">2025</div><div class="what">Revit 2026 for Advanced <span class="place">— Autodesk Authorized Training Center</span></div></div>
+    <div class="cv-row"><div class="yr">2023</div><div class="what">Den Nordiske Trebyen <span class="place">— pan-Nordic seminar, Finland, NMR scholarship</span></div></div>
+    <div class="cv-row"><div class="yr">2022</div><div class="what">Remaking Hauberg <span class="place">— 1:1 construction workshop, Frilandsmuseet</span></div></div>
+  </div>
+</div>
+
+<div class="cv-section">
+  <div class="lbl">Networks</div>
+  <div class="body">
+    <div class="cv-row"><div class="yr">—</div><div class="what">Nordisk Netværk for Træbyer</div></div>
+    <div class="cv-row"><div class="yr">—</div><div class="what">MAA <span class="place">— Akademisk Arkitektforening, Denmark</span></div></div>
+    <div class="cv-row"><div class="yr">—</div><div class="what">MNAL <span class="place">— Norske Arkitekters Landsforbund</span></div></div>
+  </div>
+</div>
+
+<div class="cv-section">
+  <div class="lbl">Competencies</div>
+  <div class="body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; font-size: 14px;">
+    <div>Revit modelling &amp; documentation</div>
+    <div>Sketching &amp; visualisation (Rhino, Enscape)</div>
+    <div>Authority applications, SLKS</div>
+    <div>Survey &amp; registration</div>
+    <div>Analysis &amp; value assessment</div>
+    <div>Adobe — presentation, storytelling</div>
+    <div>AutoCAD</div>
+    <div>Python — data, automation</div>
+  </div>
+</div>
+
+<div class="cv-section">
+  <div class="lbl">Languages</div>
+  <div class="body" style="font-size: 14px; color: var(--ink); line-height: 1.8;">
+    Norwegian (native) · Danish · Swedish · English · French (working)
+  </div>
+</div>

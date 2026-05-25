@@ -1,0 +1,132 @@
+# Decap CMS configuration
+# Docs: https://decapcms.org/docs/
+
+# ─── backend ───────────────────────────────────────────────────────────────
+# Edits commit straight to your GitHub repo. You'll need to:
+#   1. Replace `repo:` with your actual `owner/repo` slug
+#   2. Set up an OAuth provider (easiest: https://decapbridge.com — free, zero-config)
+#      OR self-host one (see README.md)
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME   # ← change this
+  branch: main
+  # If using decapbridge.com, uncomment the next two lines:
+  # base_url: https://decapbridge.com
+  # auth_endpoint: oauth/authorize/
+
+# ─── where uploaded images go ──────────────────────────────────────────────
+media_folder: "src/assets/imagery/uploads"
+public_folder: "/assets/imagery/uploads"
+
+# ─── editor branch (recommended: keeps drafts as PRs) ─────────────────────
+publish_mode: editorial_workflow
+
+# ─── site preview link from inside the editor ─────────────────────────────
+site_url: https://andreasvold.no
+display_url: https://andreasvold.no
+
+# ─── collections ───────────────────────────────────────────────────────────
+collections:
+  # ░░░ Projects ░░░
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "src/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    summary: "{{year}} · {{code}} — {{title}}"
+    sortable_fields: ["sort_year", "year", "title"]
+    view_filters:
+      - label: "2026"
+        field: year
+        pattern: "2026"
+      - label: "2023"
+        field: year
+        pattern: "2023"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Project code", name: "code", widget: "string", hint: "Short tag like RC23 or GEO22" }
+      - { label: "Year (display)", name: "year", widget: "string", hint: "e.g. 2022 or 2022—2023" }
+      - { label: "Year (for sorting)", name: "sort_year", widget: "string", hint: "Just one year, used to order the index. e.g. 2023" }
+      - { label: "Type", name: "type", widget: "string", required: false, hint: "e.g. M.Arch thesis, Study trip" }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "School", name: "school", widget: "string", required: false }
+      - { label: "Institution", name: "institution", widget: "string", required: false }
+      - label: "Extra metadata rows"
+        name: "meta"
+        widget: "list"
+        required: false
+        summary: "{{fields.label}}: {{fields.value}}"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Value", name: "value", widget: "string" }
+      - { label: "Blurb", name: "blurb", widget: "text", required: false, hint: "The short paragraph under the title" }
+      - { label: "Body (optional long text)", name: "content_body", widget: "text", required: false, hint: "HTML allowed. Shown as prose between the head and the plates." }
+      - label: "Links (optional)"
+        name: "links"
+        widget: "list"
+        required: false
+        summary: "{{fields.label}} → {{fields.url}}"
+        fields:
+          - { label: "Label (small caps)", name: "label", widget: "string" }
+          - { label: "Link text", name: "text", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "External (new tab)?", name: "external", widget: "boolean", default: false, required: false }
+          - { label: "Note under link", name: "note", widget: "string", required: false }
+      - label: "Plates (images)"
+        name: "plates"
+        widget: "list"
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Detail line (small grey text)", name: "detail", widget: "string", required: false, hint: "HTML allowed, e.g. 1:100<br>Drawing, 2023" }
+          - { label: "Image", name: "image", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string", required: false }
+          - { label: "Caption (left)", name: "caption", widget: "string", required: false }
+          - { label: "Credit (right)", name: "credit", widget: "string", required: false }
+          - label: "Shape"
+            name: "shape"
+            widget: "select"
+            options: ["tall", "wide", "square"]
+            default: "tall"
+          - { label: "Contain (don't crop)", name: "contain", widget: "boolean", default: false, required: false }
+
+  # ░░░ Writing ░░░
+  - name: "writing"
+    label: "Writing"
+    label_singular: "Writing entry"
+    folder: "src/writing-entries"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    summary: "{{year}} — {{title}}"
+    sortable_fields: ["sort_year", "year", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Code", name: "code", widget: "string", required: false }
+      - { label: "Year (display)", name: "year", widget: "string" }
+      - { label: "Year (for sorting)", name: "sort_year", widget: "string" }
+      - { label: "Publication", name: "publication", widget: "string", required: false, hint: "e.g. 'Bygningskunst og Kultur, nr. 11' or 'PDF'" }
+      - { label: "Language", name: "language", widget: "string", required: false }
+      - { label: "External URL (opens in new tab)", name: "external_url", widget: "string", required: false }
+      - { label: "PDF / file path", name: "file", widget: "file", required: false, hint: "Upload a PDF here, or paste a path like /assets/writing/foo.pdf" }
+
+  # ░░░ Site settings ░░░
+  - name: "settings"
+    label: "Site settings"
+    files:
+      - name: "site"
+        label: "Site"
+        file: "src/_data/site.json"
+        format: "json"
+        fields:
+          - { label: "Site title", name: "title", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Year", name: "year", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Site URL", name: "url", widget: "string" }

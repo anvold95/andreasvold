@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+permalink: /writing/
+title: Writing
+active: writing
+show_contact: true
+---
+
+<section style="padding: 80px 0 24px;">
+  <h1 style="font-size: 32px; font-weight: 400; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px;">Writing</h1>
+  <p style="font-size: 14px; color: var(--mute); max-width: 580px;">Essays, analyses, notes. Listed by year, most recent first.</p>
+</section>
+
+<div class="section">
+  <span>Texts</span>
+  <span class="count">{{ collections.writing.length }} entr{% if collections.writing.length == 1 %}y{% else %}ies{% endif %}</span>
+</div>
+
+<nav class="index">
+  {% for w in collections.writing %}
+  <a class="row" href="{{ w.data.external_url or w.data.file or w.url }}"{% if w.data.external_url or w.data.file %} target="_blank" rel="noopener"{% endif %}>
+    <div class="yr">{{ w.data.year or "—" }}</div>
+    <div class="code">{{ w.data.code or "—" }}</div>
+    <div class="ttl">{{ w.data.title }}</div>
+    <div class="typ">{{ w.data.publication or "—" }}</div>
+    <div class="loc">{{ w.data.language or "→" }}</div>
+    <div class="arr">{% if w.data.external_url or w.data.file %}↗{% else %}→{% endif %}</div>
+  </a>
+  {% endfor %}
+</nav>

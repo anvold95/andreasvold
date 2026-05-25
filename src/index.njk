@@ -1,0 +1,46 @@
+---
+layout: layouts/base.njk
+permalink: /
+active: home
+nav: false
+extra_head: |
+  <style>
+    .home { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 80px 0 120px; }
+    .home .statement { max-width: 920px; }
+    .home .statement h1 { font-size: 19px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 400; color: var(--ink); }
+    .home .footnote { margin-top: 48px; max-width: 580px; font-size: 15px; line-height: 1.65; color: var(--ink-soft); }
+    .home .lower { margin-top: 120px; display: grid; grid-template-columns: 1fr 320px; gap: 64px; align-items: end; }
+    .home .sketch { width: 320px; }
+    .home .sketch img { width: 100%; height: auto; display: block; filter: invert(1) hue-rotate(180deg); opacity: 0.85; }
+    .home .sketch .cap { margin-top: 8px; font-size: 11px; color: var(--faint); display: flex; justify-content: space-between; }
+    .home .enter a { font-size: 18px; color: var(--ink); display: inline-flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 6px; transition: gap 0.3s, border-color 0.2s; }
+    .home .enter a:hover { gap: 24px; border-color: var(--ink); }
+    .home .enter a .arr { color: var(--mute); }
+    .home .enter .sub { margin-top: 12px; font-size: 13px; color: var(--mute); }
+    @media (max-width: 860px) {
+      .home { padding: 40px 0 80px; }
+      .home .statement h1 { font-size: 32px; }
+      .home .lower { grid-template-columns: 1fr; gap: 40px; margin-top: 64px; }
+      .home .sketch { width: 100%; max-width: 320px; }
+    }
+  </style>
+---
+
+<section class="home">
+  <div class="statement">
+    <h1>Architect and researcher working on the buildings we already have, the archives that hold them, and the rules that decide what they are worth.</h1>
+    <p class="footnote">A practice between drawing table and archive. Building transformations on one side; long texts on how we speak about existing architecture on the other — what gets called worth preserving, what gets called outdated, and which rules decide the difference.</p>
+  </div>
+
+  <div class="lower">
+    <div class="enter">
+      <a href="/work/"><span>Index of work</span><span class="arr">→</span></a>
+      <div class="sub">Six projects, 2022—2026</div>
+    </div>
+
+    <div class="sketch">
+      <img src="/assets/imagery/elevation-clocktower.jpg" alt="Elevation, Rågsved Centrum">
+      <div class="cap"><span>RC23 · Elevation, clocktower</span><span>2023</span></div>
+    </div>
+  </div>
+</section>

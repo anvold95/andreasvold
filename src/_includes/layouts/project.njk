@@ -1,0 +1,85 @@
+---
+layout: layouts/base.njk
+active: work
+extra_scripts: '<script src="/strip.js"></script>'
+---
+
+<div class="crumb">
+  <a href="/work/">Work</a>
+  <span class="sep">/</span>
+  <span style="color: var(--ink); font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.06em; margin-right: 6px;">{{ code }}</span>
+  <span>{{ title }}</span>
+</div>
+
+<section class="project-head">
+  <div class="meta-col">
+    {% if code %}<div class="row"><span class="k">Code</span><span class="v">{{ code }}</span></div>{% endif %}
+    {% if year %}<div class="row"><span class="k">Year</span><span class="v">{{ year }}</span></div>{% endif %}
+    {% if type %}<div class="row"><span class="k">Type</span><span class="v">{{ type }}</span></div>{% endif %}
+    {% if location %}<div class="row"><span class="k">Location</span><span class="v">{{ location }}</span></div>{% endif %}
+    {% if institution %}<div class="row"><span class="k">Institution</span><span class="v">{{ institution }}</span></div>{% endif %}
+    {% if school %}<div class="row"><span class="k">School</span><span class="v">{{ school }}</span></div>{% endif %}
+    {% for m in meta %}<div class="row"><span class="k">{{ m.label }}</span><span class="v">{{ m.value }}</span></div>{% endfor %}
+  </div>
+  <div class="title-col">
+    <h1>{{ title }}</h1>
+    {% if blurb %}<p class="blurb">{{ blurb }}</p>{% endif %}
+    {% if links and links.length %}
+    <div style="margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 560px;">
+      {% for l in links %}
+      <div>
+        <div style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin-bottom: 10px;">{{ l.label }}</div>
+        <a href="{{ l.url }}"{% if l.external %} target="_blank" rel="noopener"{% endif %} style="color: var(--ink); border-bottom: 1px solid var(--mute); padding-bottom: 1px; font-size: 15px;">{{ l.text }} →</a>
+        {% if l.note %}<div style="font-size: 12px; color: var(--mute); margin-top: 6px;">{{ l.note }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if content_body %}
+<div class="prose" style="margin: 0 auto 0 0; padding-left: calc(200px + 48px);">
+{{ content_body | safe }}
+</div>
+{% endif %}
+
+{% if plates and plates.length %}
+<section class="plates-strip">
+  {% for p in plates %}
+  <article class="plate">
+    <div class="meta">
+      <div class="n">Plate {% if loop.index < 10 %}0{% endif %}{{ loop.index }}</div>
+      <div class="ttl">{{ p.title }}</div>
+      {% if p.detail %}<div class="det">{{ p.detail | safe }}</div>{% endif %}
+    </div>
+    <div class="img-wrap">
+      <div class="img {{ p.shape or 'tall' }}">
+        <img src="{{ p.image }}" alt="{{ p.alt or p.title }}"{% if p.contain %} style="object-fit: contain; background: #fff;"{% endif %}>
+      </div>
+      <div class="cap">
+        <span>{{ p.caption }}</span>
+        <span>{{ p.credit or year }}</span>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+
+<nav class="strip-nav">
+  <div class="pages"></div>
+  <div class="counter mono">01 / 01</div>
+  <div class="arrows">
+    <button data-prev type="button">← Prev</button>
+    <button data-next type="button">Next →</button>
+  </div>
+</nav>
+{% endif %}
+
+<nav class="proj-nav">
+  <div class="prev"></div>
+  <div class="next">
+    <div class="k">Back to index</div>
+    <a href="/work/">All work →</a>
+  </div>
+</nav>

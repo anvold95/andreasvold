@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>andreasvold.no</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk+Text+Pro&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+  body {
+    background: #0a0a0a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* iPhone frame */
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: #000;
+    border-radius: 52px;
+    padding: 8px;
+    position: relative;
+    box-shadow:
+      0 0 0 1px #1a1a1a,
+      0 40px 80px -20px rgba(0,0,0,0.8),
+      0 20px 40px -10px rgba(0,0,0,0.6);
+  }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Dynamic island */
+  .island {
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 35px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* Status bar */
+  .status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54px;
+    padding: 18px 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 99;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: -apple-system, system-ui;
+  }
+  .status .right { display: flex; gap: 6px; align-items: center; }
+  .status .right svg { width: 18px; height: 12px; }
+
+  /* Scroll container */
+  .content {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    color: #fff;
+    padding-top: 54px;
+  }
+  .content::-webkit-scrollbar { display: none; }
+
+  /* Nav */
+  .nav {
+    padding: 24px 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav .logo {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    color: #fff;
+  }
+  .nav .menu {
+    width: 22px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .nav .menu span {
+    height: 1px;
+    background: #fff;
+    width: 100%;
+  }
+
+  /* Hero image */
+  .hero {
+    width: 100%;
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+
+  /* SVG architectural drawing as hero image */
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Image caption overlay */
+  .caption {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* Intro text */
+  .intro {
+    padding: 40px 20px 32px;
+  }
+  .intro p {
+    font-size: 17px;
+    line-height: 1.45;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: -0.005em;
+  }
+  .intro p .muted {
+    color: rgba(255,255,255,0.45);
+  }
+  .intro .location {
+    margin-top: 24px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Section title */
+  .section-title {
+    padding: 16px 20px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+  }
+
+  /* Work item */
+  .work-item {
+    padding: 0 20px 32px;
+  }
+  .work-item .image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #161616;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .work-item .image svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .work-item .title {
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .work-item .meta {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* Fisker terminal block */
+  .fisker {
+    margin: 0 20px 32px;
+    background: #0f0f0f;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    padding: 20px;
+    aspect-ratio: 4/5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .fisker .tag {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fisker .tag::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c84a2c;
+  }
+  .fisker .prompt {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .fisker .response {
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+  }
+  .fisker .footer {
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.3);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 40px 20px 60px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+  }
+  .footer a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+  }
+  .footer .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+
+  /* Home indicator */
+  .home-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 134px;
+    height: 5px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 3px;
+    z-index: 101;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="screen">
+    <div class="island"></div>
+
+    <div class="status">
+      <div>9:41</div>
+      <div class="right">
+        <!-- signal -->
+        <svg viewBox="0 0 18 12" fill="white"><rect x="0" y="8" width="3" height="4"/><rect x="4" y="6" width="3" height="6"/><rect x="8" y="3" width="3" height="9"/><rect x="12" y="0" width="3" height="12"/></svg>
+        <!-- wifi -->
+        <svg viewBox="0 0 16 12" fill="white"><path d="M8 11.5l-1.5-1.5c-.5.5-1.5.5-2 0L8 7.5l3.5 2.5c-.5.5-1.5.5-2 0L8 11.5z M2 5.5C4 3 6 2 8 2s4 1 6 3.5l-1.5 1.5C11 5 9.5 4.5 8 4.5s-3 .5-4.5 2L2 5.5z"/></svg>
+        <!-- battery -->
+        <svg viewBox="0 0 25 12" fill="none" stroke="white" stroke-width="0.8"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5"/><rect x="2" y="2" width="18" height="8" rx="1" fill="white"/><rect x="22" y="4" width="2" height="4" rx="1" fill="white"/></svg>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <nav class="nav">
+        <span class="logo">Andreas Vold</span>
+        <div class="menu"><span></span><span></span><span></span></div>
+      </nav>
+
+      <!-- HERO: Architectural plan/section drawing as image -->
+      <div class="hero">
+        <svg class="hero-svg" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="grain" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+              <rect width="100" height="100" fill="#1c1c1c"/>
+            </pattern>
+          </defs>
+          <rect width="300" height="400" fill="url(#grain)"/>
+
+          <!-- Building section drawing -->
+          <g stroke="#888" stroke-width="0.4" fill="none" opacity="0.85">
+            <!-- ground line -->
+            <line x1="20" y1="340" x2="280" y2="340" stroke-width="0.6"/>
+
+            <!-- main building outline -->
+            <polyline points="50,340 50,200 150,140 250,200 250,340"/>
+
+            <!-- floor lines -->
+            <line x1="50" y1="280" x2="250" y2="280"/>
+            <line x1="50" y1="240" x2="250" y2="240"/>
+
+            <!-- roof line -->
+            <line x1="60" y1="200" x2="240" y2="200" stroke-dasharray="2,3"/>
+
+            <!-- windows ground -->
+            <rect x="70" y="295" width="20" height="35"/>
+            <rect x="110" y="295" width="20" height="35"/>
+            <rect x="170" y="295" width="20" height="35"/>
+            <rect x="210" y="295" width="20" height="35"/>
+
+            <!-- windows first -->
+            <rect x="70" y="250" width="20" height="25"/>
+            <rect x="110" y="250" width="20" height="25"/>
+            <rect x="170" y="250" width="20" height="25"/>
+            <rect x="210" y="250" width="20" height="25"/>
+
+            <!-- door -->
+            <rect x="140" y="295" width="20" height="40"/>
+            <line x1="150" y1="295" x2="150" y2="335"/>
+
+            <!-- roof windows -->
+            <polygon points="100,225 110,215 130,215 140,225 140,235 100,235"/>
+            <polygon points="160,225 170,215 190,215 200,225 200,235 160,235"/>
+
+            <!-- chimney -->
+            <rect x="170" y="155" width="10" height="20"/>
+
+            <!-- dimension marks -->
+            <line x1="20" y1="350" x2="280" y2="350" stroke="#555"/>
+            <line x1="20" y1="345" x2="20" y2="355" stroke="#555"/>
+            <line x1="280" y1="345" x2="280" y2="355" stroke="#555"/>
+            <line x1="150" y1="345" x2="150" y2="355" stroke="#555"/>
+          </g>
+
+          <!-- subtle annotations -->
+          <text x="30" y="368" font-family="ui-monospace, monospace" font-size="5" fill="#666" letter-spacing="0.5">SNIT A—A</text>
+          <text x="240" y="368" font-family="ui-monospace, monospace" font-size="5" fill="#666" letter-spacing="0.5">1:100</text>
+        </svg>
+
+        <div class="caption">
+          <span>01 / Section, Rågsved Centrum</span>
+          <span>2023</span>
+        </div>
+      </div>
+
+      <!-- INTRO -->
+      <div class="intro">
+        <p>
+          Architect and researcher working on
+          the <span style="color:#fff;">buildings we already have</span><span class="muted">,
+          the archives that hold them, and the
+          rules that decide what they are worth.</span>
+        </p>
+        <div class="location">Copenhagen — 2024</div>
+      </div>
+
+      <!-- WORKS -->
+      <div class="section-title">Selected works</div>
+
+      <!-- Work 1: Fisker model -->
+      <div class="work-item">
+        <div class="fisker">
+          <div class="tag">Fisker.model — live</div>
+          <div>
+            <div class="prompt">&gt; Hvor tog modernismen fejl?</div>
+            <div class="response">"Modernismen mistede sin livsfornemmelighed da hun tabte kontakten til håndværkeriet og til dagligt brugt materiale."</div>
+          </div>
+          <div class="footer" style="border:none; padding:0;">
+            <span>v1.0 · LLM + RAG</span>
+            <span>Try →</span>
+          </div>
+        </div>
+        <div class="title">Fisker, arkivet og maskinen</div>
+        <div class="meta">Essay & language model · MBK 2026</div>
+      </div>
+
+      <!-- Work 2: Rågsved -->
+      <div class="work-item">
+        <div class="image">
+          <svg viewBox="0 0 300 375" preserveAspectRatio="xMidYMid slice">
+            <rect width="300" height="375" fill="#141414"/>
+            <!-- aerial plan abstraction -->
+            <g fill="#2a2a2a" stroke="#3a3a3a" stroke-width="0.3">
+              <!-- buildings -->
+              <rect x="40" y="60" width="80" height="20"/>
+              <rect x="140" y="60" width="120" height="20"/>
+              <rect x="40" y="100" width="220" height="15"/>
+              <rect x="40" y="135" width="60" height="40"/>
+              <rect x="120" y="135" width="60" height="40"/>
+              <rect x="200" y="135" width="60" height="40"/>
+              <rect x="40" y="195" width="220" height="18"/>
+              <rect x="40" y="230" width="100" height="25"/>
+              <rect x="160" y="230" width="100" height="25"/>
+              <!-- central plaza -->
+              <rect x="100" y="275" width="100" height="60" fill="#1f1f1f"/>
+            </g>
+            <!-- roads -->
+            <g stroke="#444" stroke-width="0.5" fill="none">
+              <line x1="0" y1="90" x2="300" y2="90"/>
+              <line x1="0" y1="125" x2="300" y2="125"/>
+              <line x1="0" y1="185" x2="300" y2="185"/>
+              <line x1="0" y1="220" x2="300" y2="220"/>
+              <line x1="0" y1="265" x2="300" y2="265"/>
+              <line x1="110" y1="0" x2="110" y2="375" stroke-dasharray="2,4"/>
+              <line x1="190" y1="0" x2="190" y2="375" stroke-dasharray="2,4"/>
+            </g>
+            <!-- compass / north -->
+            <g transform="translate(265,30)" stroke="#666" fill="#666" stroke-width="0.4">
+              <line x1="0" y1="-10" x2="0" y2="10"/>
+              <polygon points="0,-10 -3,-4 3,-4" fill="#888"/>
+              <text x="-3" y="-13" font-family="ui-monospace" font-size="6" fill="#888">N</text>
+            </g>
+          </svg>
+        </div>
+        <div class="title">Rågsved Centrum</div>
+        <div class="meta">Master's thesis, KADK · 2023</div>
+      </div>
+
+      <!-- Work 3: forthcoming -->
+      <div class="work-item">
+        <div class="image">
+          <svg viewBox="0 0 300 375" preserveAspectRatio="xMidYMid slice">
+            <rect width="300" height="375" fill="#101010"/>
+            <!-- abstract regulation diagram -->
+            <g stroke="#3a3a3a" stroke-width="0.4" fill="none">
+              <rect x="50" y="80" width="200" height="220"/>
+              <rect x="70" y="100" width="160" height="180" stroke-dasharray="3,3"/>
+              <rect x="90" y="120" width="120" height="140" stroke-dasharray="1,2"/>
+              <rect x="110" y="140" width="80" height="100"/>
+            </g>
+            <g fill="#666" font-family="ui-monospace, monospace" font-size="5" letter-spacing="0.5">
+              <text x="55" y="75">§ 8.1 — bygningsreglementet</text>
+              <text x="75" y="95">§ 8.1.2 — bevaringsværdige</text>
+              <text x="95" y="115">§ 8.1.2.4 — transformation</text>
+              <text x="115" y="135">↳ what is allowed</text>
+            </g>
+            <text x="115" y="195" fill="#888" font-family="Inter" font-size="9" font-style="italic">the rules that</text>
+            <text x="115" y="208" fill="#888" font-family="Inter" font-size="9" font-style="italic">decide what is</text>
+            <text x="115" y="221" fill="#c84a2c" font-family="Inter" font-size="9" font-style="italic">worth keeping</text>
+          </svg>
+        </div>
+        <div class="title">On regulation and the everyday</div>
+        <div class="meta">Forthcoming · 2026</div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="footer">
+        <div class="row"><span>Practice</span><a href="#">av-a.no →</a></div>
+        <div class="row"><span>Contact</span><a href="#">post@av-a.no</a></div>
+        <div class="row"><span>CV</span><a href="#">PDF →</a></div>
+        <div class="row" style="margin-top:24px; opacity:0.5;"><span>© 2026</span><span>København</span></div>
+      </div>
+
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+</body>
+</html>
